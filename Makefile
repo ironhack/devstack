@@ -18,6 +18,12 @@ export COMPOSE_PROJECT_NAME
 
 include *.mk
 
+# IH VARIABLES
+IH_THEME_NAME=ih-lms-theme
+IH_THEME_WORKSPACE=$(shell dirname "$(shell pwd)")/$(IH_THEME_NAME)
+export IH_THEME_NAME
+export IH_THEME_WORKSPACE
+
 # Generates a help message. Borrowed from https://github.com/pydanny/cookiecutter-djangopackage.
 help: ## Display this help message
 	@echo "Please use \`make <target>' where <target> is one of"
