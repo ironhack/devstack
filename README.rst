@@ -1,6 +1,8 @@
 Ironhack Devstack
 =================
 
+**NOTE:** Currently, `stable` branch is based on `open-release/hawthorn.master` branch from oficial `edx/devstack`_ repo.
+
 Get up and running quickly a development environment with Open edX services.
 
 We'll set an environment variable with the name of the release of Open edX
@@ -1064,3 +1066,4 @@ GitHub issue which explains the `current status of implementing delegated consis
 .. _Python virtualenv: http://docs.python-guide.org/en/latest/dev/virtualenvs/#lower-level-virtualenv
 .. _Running analytics acceptance tests in docker: http://edx-analytics-pipeline-reference.readthedocs.io/en/latest/running_acceptance_tests_in_docker.html
 .. _Troubleshooting docker analyticstack: http://edx-analytics-pipeline-reference.readthedocs.io/en/latest/troubleshooting_docker_analyticstack.html
+.. _edx/devstack: https://github.com/edx/devstack
