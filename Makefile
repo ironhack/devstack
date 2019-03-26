@@ -18,6 +18,12 @@ export COMPOSE_PROJECT_NAME
 
 include *.mk
 
+# IH VARIABLES
+IH_THEME_NAME=ih-lms-theme
+IH_THEME_WORKSPACE=$(shell dirname "$(shell pwd)")/$(IH_THEME_NAME)
+export IH_THEME_NAME
+export IH_THEME_WORKSPACE
+
 # Generates a help message. Borrowed from https://github.com/pydanny/cookiecutter-djangopackage.
 help: ## Display this help message
 	@echo "Please use \`make <target>' where <target> is one of"
@@ -39,6 +45,9 @@ dev.checkout: ## Check out "openedx-release/$OPENEDX_RELEASE" in each repo if se
 
 dev.clone: ## Clone service repos to the parent directory
 	./repo.sh clone
+
+ih.dev.clone: ## Clone ironhack theme repo to the parent directory
+	./repo.sh ih_clone	
 
 dev.provision.run: ## Provision all services with local mounted directories
 	DOCKER_COMPOSE_FILES="-f docker-compose.yml -f docker-compose-host.yml" ./provision.sh
@@ -201,6 +210,9 @@ xqueue_consumer-restart: ## Kill the XQueue development server. The watcher proc
 
 lms-static: ## Rebuild static assets for the LMS container
 	docker exec -t edx.devstack.lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform/ && paver update_assets'
+
+lms-compile-sass: ## Compile static sass files for the LMS container
+	docker exec -t edx.devstack.lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform/ && paver compile_sass --system=lms --theme-dirs /edx/app/edxapp/edx-platform/themes --themes=$(IH_THEME_NAME) --debug'	
 
 studio-static: ## Rebuild static assets for the Studio container
 	docker exec -t edx.devstack.studio bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform/ && paver update_assets'

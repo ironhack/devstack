@@ -34,6 +34,10 @@ private_repos=(
     "https://github.com/edx/edx-themes.git"
 )
 
+ironhack_theme_repo=(
+    "https://github.com/ironhack/ih-lms-theme.git"
+) 
+
 name_pattern=".*edx/(.*).git"
 
 _checkout ()
@@ -89,6 +93,8 @@ _clone ()
             else
                 git clone $repo
             fi
+            ironhack_pattern=".*ironhack/(.*).git"
+            if [[ $repo =~ $ironhack_pattern ]]; then exit 0; fi
             if [ -n "${OPENEDX_RELEASE}" ]; then
                 git checkout open-release/${OPENEDX_RELEASE}
             fi
@@ -105,6 +111,11 @@ clone ()
 clone_private ()
 {
     _clone "${private_repos[@]}"
+}
+
+ih_clone ()
+{
+    _clone "${ironhack_theme_repo[@]}"
 }
 
 reset ()
@@ -155,4 +166,6 @@ elif [ "$1" == "reset" ]; then
     fi
 elif [ "$1" == "status" ]; then
     status
+elif [ "$1" == "ih_clone" ]; then
+    ih_clone
 fi
