@@ -54,6 +54,12 @@ To stop application:
 
   make stop
 
+In order to compile sass files, run:
+
+.. code:: sh
+
+  make lms-compile-sass
+
 
 Open edX Devstack |Build Status|
 ================================
