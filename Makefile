@@ -46,6 +46,9 @@ dev.checkout: ## Check out "openedx-release/$OPENEDX_RELEASE" in each repo if se
 dev.clone: ## Clone service repos to the parent directory
 	./repo.sh clone
 
+ih.dev.clone: ## Clone ironhack theme repo to the parent directory
+	./repo.sh ih_clone	
+
 dev.provision.run: ## Provision all services with local mounted directories
 	DOCKER_COMPOSE_FILES="-f docker-compose.yml -f docker-compose-host.yml" ./provision.sh
 
