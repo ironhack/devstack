@@ -1,0 +1,74 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-k8s.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: lms
+  name: lms
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: lms
+    spec:
+      containers:
+      - args:
+        - bash
+        - -c
+        - source /edx/app/edxapp/edxapp_env && while true; do python /edx/app/edxapp/edx-platform/manage.py
+          lms runserver 0.0.0.0:18000 --settings devstack_docker; sleep 2; done
+        env:
+        - name: BOK_CHOY_CMS_PORT
+          value: "18031"
+        - name: BOK_CHOY_HOSTNAME
+          value: edx.devstack.lms
+        - name: BOK_CHOY_LMS_PORT
+          value: "18003"
+        - name: EDXAPP_TEST_MONGO_HOST
+          value: edx.devstack.mongo
+        - name: NO_PYTHON_UNINSTALL
+          value: "1"
+        image: edxops/edxapp:hawthorn.master
+        name: lms
+        ports:
+        - containerPort: 18000
+        - containerPort: 19876
+        resources: {}
+        stdin: true
+        tty: true
+        volumeMounts:
+        - mountPath: /edx/var/edxapp/staticfiles/
+          name: edxapp-lms-assets
+        - mountPath: /edx/app/edxapp/edx-platform
+          name: lms-claim1
+        - mountPath: /edx/app/edxapp/edx-platform/node_modules
+          name: edxapp-node-modules
+        - mountPath: /edx/src
+          name: lms-claim3
+        - mountPath: /edx/app/edxapp/edx-platform/themes/ih-lms-theme
+          name: lms-claim4
+      restartPolicy: Always
+      volumes:
+      - name: edxapp-lms-assets
+        persistentVolumeClaim:
+          claimName: edxapp-lms-assets
+      - name: lms-claim1
+        persistentVolumeClaim:
+          claimName: lms-claim1
+      - name: edxapp-node-modules
+        persistentVolumeClaim:
+          claimName: edxapp-node-modules
+      - name: lms-claim3
+        persistentVolumeClaim:
+          claimName: lms-claim3
+      - name: lms-claim4
+        persistentVolumeClaim:
+          claimName: lms-claim4
+status: {}

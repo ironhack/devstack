@@ -1,0 +1,69 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-k8s.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: studio
+  name: studio
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: studio
+    spec:
+      containers:
+      - args:
+        - bash
+        - -c
+        - source /edx/app/edxapp/edxapp_env && while true; do python /edx/app/edxapp/edx-platform/manage.py
+          cms runserver 0.0.0.0:18010 --settings devstack_docker; sleep 2; done
+        env:
+        - name: BOK_CHOY_CMS_PORT
+          value: "18131"
+        - name: BOK_CHOY_HOSTNAME
+          value: edx.devstack.studio
+        - name: BOK_CHOY_LMS_PORT
+          value: "18103"
+        - name: EDXAPP_TEST_MONGO_HOST
+          value: edx.devstack.mongo
+        - name: NO_PYTHON_UNINSTALL
+          value: "1"
+        image: edxops/edxapp:hawthorn.master
+        name: studio
+        ports:
+        - containerPort: 18010
+        - containerPort: 19877
+        resources: {}
+        stdin: true
+        tty: true
+        volumeMounts:
+        - mountPath: /edx/var/edxapp/staticfiles/
+          name: edxapp-studio-assets
+        - mountPath: /edx/app/edxapp/edx-platform
+          name: studio-claim1
+        - mountPath: /edx/app/edxapp/edx-platform/node_modules
+          name: edxapp-node-modules
+        - mountPath: /edx/src
+          name: studio-claim3
+      restartPolicy: Always
+      volumes:
+      - name: edxapp-studio-assets
+        persistentVolumeClaim:
+          claimName: edxapp-studio-assets
+      - name: studio-claim1
+        persistentVolumeClaim:
+          claimName: studio-claim1
+      - name: edxapp-node-modules
+        persistentVolumeClaim:
+          claimName: edxapp-node-modules
+      - name: studio-claim3
+        persistentVolumeClaim:
+          claimName: studio-claim3
+status: {}
