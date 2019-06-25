@@ -32,9 +32,9 @@ services:
       - edxapp_node_modules:/edx/app/edxapp/edx-platform/node_modules
       - ${DEVSTACK_WORKSPACE}/src:/edx/src:cached
       - ${IH_THEME_WORKSPACE}:/edx/app/edxapp/edx-platform/themes/${IH_THEME_NAME}
-  forum:
-    volumes:
-      - ${DEVSTACK_WORKSPACE}/cs_comments_service:/edx/app/forum/cs_comments_service:cached
+  # forum:
+  #   volumes:
+  #     - ${DEVSTACK_WORKSPACE}/cs_comments_service:/edx/app/forum/cs_comments_service:cached
       
 volumes:
   credentials_node_modules:
