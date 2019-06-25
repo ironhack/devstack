@@ -214,6 +214,9 @@ lms-static: ## Rebuild static assets for the LMS container
 lms-compile-sass: ## Compile static sass files for the LMS container
 	docker exec -t edx.devstack.lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform/ && paver compile_sass --system=lms --theme-dirs /edx/app/edxapp/edx-platform/themes --themes=$(IH_THEME_NAME) --debug'	
 
+studio-compile-sass: ## Compile static sass files for the LMS container
+	docker exec -t edx.devstack.studio bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform/ && paver compile_sass --system=cms --theme-dirs /edx/app/edxapp/edx-platform/themes --themes=$(IH_THEME_NAME) --debug'	
+
 studio-static: ## Rebuild static assets for the Studio container
 	docker exec -t edx.devstack.studio bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform/ && paver update_assets'
 
