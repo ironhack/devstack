@@ -62,6 +62,22 @@ In order to compile sass files, run:
 
   make lms-compile-sass
 
+Additional dependencies
+-----------------------
+In order to enable our custom deliverable xblock we need to install it inside our studio container
+
+.. code:: sh
+
+  make studio-shell
+  pip install -e openedx/core/lib/xblock_builtin/xblock_deliverable
+
+In order to enable mongoDB Atlas connection we need to install certifi package inside our studio container
+
+.. code:: sh
+
+  make studio-shell
+  pip install certifi==2019.6.16
+
 
 Open edX Devstack |Build Status|
 ================================
