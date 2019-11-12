@@ -19,7 +19,7 @@ services:
   lms:
     volumes:
       - ${DEVSTACK_WORKSPACE}/ih-edx-platform:/edx/app/edxapp/edx-platform:cached
-      - edxapp_node_modules:/edx/app/edxapp/edx-platform/node_modules
+      - ${DEVSTACK_WORKSPACE}/ih-edx-platform/node_modules:/edx/app/edxapp/edx-platform/node_modules
       - ${DEVSTACK_WORKSPACE}/src:/edx/src:cached
       - ${IH_THEME_WORKSPACE}:/edx/app/edxapp/edx-platform/themes/${IH_THEME_NAME}
   # edx_notes_api:
@@ -29,7 +29,7 @@ services:
   studio:
     volumes:
       - ${DEVSTACK_WORKSPACE}/ih-edx-platform:/edx/app/edxapp/edx-platform:cached
-      - edxapp_node_modules:/edx/app/edxapp/edx-platform/node_modules
+      - ${DEVSTACK_WORKSPACE}/ih-edx-platform/node_modules:/edx/app/edxapp/edx-platform/node_modules
       - ${DEVSTACK_WORKSPACE}/src:/edx/src:cached
       - ${IH_THEME_WORKSPACE}:/edx/app/edxapp/edx-platform/themes/${IH_THEME_NAME}
   # forum:
