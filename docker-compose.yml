@@ -22,16 +22,16 @@ services:
   #     - ../edx-e2e-tests/upload_files:/edx/app/e2e/edx-e2e-tests/upload_files
   #     - ../edx-platform/common/test/data:/edx/app/edxapp/edx-platform/common/test/data
 
-  elasticsearch:
-    container_name: edx.devstack.elasticsearch
-    image: edxops/elasticsearch:devstack
-    # TODO: What to do about these forwarded ports? They'll conflict with ports forwarded by the Vagrant VM.
-    # ports:
-    #   - "9200:9200"
-    #   - "9300:9300"
-    volumes:
-      - elasticsearch_data:/usr/share/elasticsearch/data
-      - elasticsearch_data:/usr/share/elasticsearch/logs
+  # elasticsearch:
+  #   container_name: edx.devstack.elasticsearch
+  #   image: edxops/elasticsearch:devstack
+  #   # TODO: What to do about these forwarded ports? They'll conflict with ports forwarded by the Vagrant VM.
+  #   # ports:
+  #   #   - "9200:9200"
+  #   #   - "9300:9300"
+  #   volumes:
+  #     - elasticsearch_data:/usr/share/elasticsearch/data
+  #     - elasticsearch_data:/usr/share/elasticsearch/logs
 
   # firefox:
   #   container_name: edx.devstack.firefox
@@ -231,7 +231,7 @@ volumes:
   # discovery_assets:
   edxapp_lms_assets:
   edxapp_studio_assets:
-  elasticsearch_data:
+  # elasticsearch_data:
   mongo_data:
   mysql_data:
   devpi_data:
